@@ -119,6 +119,8 @@ const INITIAL_TOURNAMENT_DATA = {
       status: "scheduled",
       team1Score: 0,
       team2Score: 0,
+      referee: "Saurabh",
+      statsKeeper: "Shardul / Saurabh",
       events: []
     },
     {
@@ -136,6 +138,8 @@ const INITIAL_TOURNAMENT_DATA = {
       status: "scheduled",
       team1Score: 0,
       team2Score: 0,
+      referee: "Shubbu",
+      statsKeeper: "Moon",
       events: []
     },
     {
@@ -153,6 +157,8 @@ const INITIAL_TOURNAMENT_DATA = {
       status: "scheduled",
       team1Score: 0,
       team2Score: 0,
+      referee: "Rishit",
+      statsKeeper: "Moon",
       events: []
     },
     {
@@ -170,6 +176,8 @@ const INITIAL_TOURNAMENT_DATA = {
       status: "scheduled",
       team1Score: 0,
       team2Score: 0,
+      referee: "Arjun",
+      statsKeeper: "Moon",
       events: []
     },
     {
@@ -187,6 +195,8 @@ const INITIAL_TOURNAMENT_DATA = {
       status: "scheduled",
       team1Score: 0,
       team2Score: 0,
+      referee: "Ayush",
+      statsKeeper: "Shardul / Saurabh",
       events: []
     },
     {
@@ -204,6 +214,8 @@ const INITIAL_TOURNAMENT_DATA = {
       status: "scheduled",
       team1Score: 0,
       team2Score: 0,
+      referee: "Aarav",
+      statsKeeper: "Moon",
       events: []
     },
     {
@@ -223,6 +235,8 @@ const INITIAL_TOURNAMENT_DATA = {
       status: "scheduled",
       team1Score: 0,
       team2Score: 0,
+      referee: "TBD",
+      statsKeeper: "Moon",
       events: []
     },
     {
@@ -242,6 +256,8 @@ const INITIAL_TOURNAMENT_DATA = {
       status: "scheduled",
       team1Score: 0,
       team2Score: 0,
+      referee: "TBD",
+      statsKeeper: "Moon",
       events: []
     },
     {
@@ -261,6 +277,8 @@ const INITIAL_TOURNAMENT_DATA = {
       status: "scheduled",
       team1Score: 0,
       team2Score: 0,
+      referee: "TBD",
+      statsKeeper: "Moon",
       events: []
     },
     {
@@ -280,6 +298,8 @@ const INITIAL_TOURNAMENT_DATA = {
       status: "scheduled",
       team1Score: 0,
       team2Score: 0,
+      referee: "TBD",
+      statsKeeper: "Moon",
       events: []
     },
     {
@@ -299,6 +319,8 @@ const INITIAL_TOURNAMENT_DATA = {
       status: "scheduled",
       team1Score: 0,
       team2Score: 0,
+      referee: "TBD",
+      statsKeeper: "Moon",
       events: []
     },
     {
@@ -318,6 +340,8 @@ const INITIAL_TOURNAMENT_DATA = {
       status: "scheduled",
       team1Score: 0,
       team2Score: 0,
+      referee: "TBD",
+      statsKeeper: "Moon",
       events: []
     }
   ]

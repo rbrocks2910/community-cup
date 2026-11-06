@@ -6,7 +6,7 @@ let selectedTeamId = 'inter_babuganj';
 let activeMatchId = null;
 let matchFilter = 'all';
 
-const STORAGE_KEY = 'COMMUNITY_CUP_2026_V4';
+const STORAGE_KEY = 'COMMUNITY_CUP_2026_V5';
 
 document.addEventListener('DOMContentLoaded', () => {
   initData();
@@ -298,6 +298,10 @@ function renderOverview() {
           <div class="${t2 ? 'team-side-name' : 'team-side-placeholder'}">${t2 ? t2.name : (nextM.team2Placeholder || 'TBD')}</div>
         </div>
       </div>
+      <div class="match-officials-bar">
+        <span>🚩 Referee: <strong>${nextM.referee || 'TBD'}</strong></span>
+        <span>📝 Stats Desk: <strong>${nextM.statsKeeper || 'Moon'}</strong></span>
+      </div>
       <div class="match-card-bottom">
         <span style="font-size:0.75rem; color:var(--text-dim);">${nextM.status.toUpperCase()}</span>
         <button class="btn btn-gold btn-sm" onclick="openLoggerModal('${nextM.id}')">
@@ -371,6 +375,11 @@ function renderMatches() {
             ${t2 ? `<img src="${t2.logo}" onerror="this.src='images/tournament_logo.jpg'"/>` : `<div class="team-placeholder-circle">${m.seedCode2 || 'TBD'}</div>`}
             <div class="${t2 ? 'team-side-name' : 'team-side-placeholder'}">${t2 ? t2.name : (m.team2Placeholder || 'TBD')}</div>
           </div>
+        </div>
+
+        <div class="match-officials-bar">
+          <span>🚩 Referee: <strong>${m.referee || 'TBD'}</strong></span>
+          <span>📝 Stats: <strong>${m.statsKeeper || 'Moon'}</strong></span>
         </div>
 
         ${eventsHtml}
@@ -714,6 +723,11 @@ function renderLoggerContent() {
         <button class="btn btn-sm ${m.status === 'scheduled' ? 'btn-cyan' : 'btn-dark'}" onclick="setMatchStatus('${m.id}', 'scheduled')">Scheduled</button>
         <button class="btn btn-sm ${m.status === 'live' ? 'btn-gold' : 'btn-dark'}" onclick="setMatchStatus('${m.id}', 'live')">🔴 In Progress</button>
         <button class="btn btn-sm ${m.status === 'finished' ? 'btn-cyan' : 'btn-dark'}" onclick="setMatchStatus('${m.id}', 'finished')">🏁 Finished</button>
+      </div>
+
+      <div class="match-officials-bar" style="margin-top:0.85rem; justify-content:center; gap:1.25rem;">
+        <span>🚩 Referee: <strong>${m.referee || 'TBD'}</strong></span>
+        <span>📝 Stats Desk: <strong style="color:var(--sony-cyan);">${m.statsKeeper || 'Moon'}</strong></span>
       </div>
     </div>
 

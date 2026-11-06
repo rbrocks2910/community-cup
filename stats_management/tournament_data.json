@@ -329,7 +329,9 @@
       "team2Score": 0,
       "penalties": null,
       "events": [],
-      "notes": "05:00 - 05:10 PM \u2022 3m quick change"
+      "notes": "05:00 - 05:10 PM \u2022 3m quick change",
+      "referee": "Saurabh",
+      "statsKeeper": "Shardul / Saurabh"
     },
     {
       "id": "M2",
@@ -348,7 +350,9 @@
       "team2Score": 0,
       "penalties": null,
       "events": [],
-      "notes": "05:13 - 05:23 PM \u2022 Group A resting"
+      "notes": "05:13 - 05:23 PM \u2022 Group A resting",
+      "referee": "Shubbu",
+      "statsKeeper": "Moon"
     },
     {
       "id": "M3",
@@ -367,7 +371,9 @@
       "team2Score": 0,
       "penalties": null,
       "events": [],
-      "notes": "05:26 - 05:36 PM \u2022 Empire State rested"
+      "notes": "05:26 - 05:36 PM \u2022 Empire State rested",
+      "referee": "Rishit",
+      "statsKeeper": "Moon"
     },
     {
       "id": "M4",
@@ -386,7 +392,9 @@
       "team2Score": 0,
       "penalties": null,
       "events": [],
-      "notes": "05:39 - 05:49 PM \u2022 Babuganj rested"
+      "notes": "05:39 - 05:49 PM \u2022 Babuganj rested",
+      "referee": "Arjun",
+      "statsKeeper": "Moon"
     },
     {
       "id": "M5",
@@ -405,7 +413,9 @@
       "team2Score": 0,
       "penalties": null,
       "events": [],
-      "notes": "05:52 - 06:02 PM \u2022 Group A Decider"
+      "notes": "05:52 - 06:02 PM \u2022 Group A Decider",
+      "referee": "Ayush",
+      "statsKeeper": "Shardul / Saurabh"
     },
     {
       "id": "M6",
@@ -424,7 +434,9 @@
       "team2Score": 0,
       "penalties": null,
       "events": [],
-      "notes": "06:05 - 06:15 PM \u2022 Group B Decider"
+      "notes": "06:05 - 06:15 PM \u2022 Group B Decider",
+      "referee": "Aarav",
+      "statsKeeper": "Moon"
     },
     {
       "id": "M7",
@@ -455,7 +467,9 @@
       "team2Score": 0,
       "penalties": null,
       "events": [],
-      "notes": "06:21 - 06:33 PM \u2022 Winner to SF 2"
+      "notes": "06:21 - 06:33 PM \u2022 Winner to SF 2",
+      "referee": "TBD",
+      "statsKeeper": "Moon"
     },
     {
       "id": "M8",
@@ -486,7 +500,9 @@
       "team2Score": 0,
       "penalties": null,
       "events": [],
-      "notes": "06:36 - 06:48 PM \u2022 Winner to SF 1"
+      "notes": "06:36 - 06:48 PM \u2022 Winner to SF 1",
+      "referee": "TBD",
+      "statsKeeper": "Moon"
     },
     {
       "id": "M9",
@@ -516,7 +532,9 @@
       "team2Score": 0,
       "penalties": null,
       "events": [],
-      "notes": "06:52 - 07:07 PM \u2022 Winner to Final"
+      "notes": "06:52 - 07:07 PM \u2022 Winner to Final",
+      "referee": "TBD",
+      "statsKeeper": "Moon"
     },
     {
       "id": "M10",
@@ -546,7 +564,9 @@
       "team2Score": 0,
       "penalties": null,
       "events": [],
-      "notes": "07:10 - 07:25 PM \u2022 Winner to Final"
+      "notes": "07:10 - 07:25 PM \u2022 Winner to Final",
+      "referee": "TBD",
+      "statsKeeper": "Moon"
     },
     {
       "id": "M11",
@@ -575,7 +595,9 @@
       "team2Score": 0,
       "penalties": null,
       "events": [],
-      "notes": "07:29 - 07:39 PM \u2022 Bronze decider"
+      "notes": "07:29 - 07:39 PM \u2022 Bronze decider",
+      "referee": "TBD",
+      "statsKeeper": "Moon"
     },
     {
       "id": "M12",
@@ -604,7 +626,9 @@
       "team2Score": 0,
       "penalties": null,
       "events": [],
-      "notes": "07:43 - 07:58 PM \u2022 Championship Cup Final"
+      "notes": "07:43 - 07:58 PM \u2022 Championship Cup Final",
+      "referee": "TBD",
+      "statsKeeper": "Moon"
     }
   ]
 }

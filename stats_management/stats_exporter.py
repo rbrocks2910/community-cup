@@ -39,6 +39,11 @@ def print_summary(data):
         score = f"{m.get('team1Score', 0)} - {m.get('team2Score', 0)}" if status != 'SCHEDULED' else "VS"
         print(f"  Match #{m.get('matchNumber'):02d} [{m.get('time')}] {t1:18s} {score:^7s} {t2:18s} | {status}")
         
+        ref = m.get('referee', '')
+        desk = m.get('statsKeeper', '')
+        if ref or desk:
+            print(f"      * Ref: {ref:10s} | Stats Desk: {desk}")
+
         events = m.get('events', [])
         for ev in events:
             ev_type = ev.get('type')

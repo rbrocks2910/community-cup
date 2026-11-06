@@ -1075,3 +1075,23 @@ body {
   vertical-align: middle;
   font-style: normal;
 }
+
+/* MATCH OFFICIALS BAR */
+.match-officials-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  font-size: 0.73rem;
+  color: var(--text-dim);
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  padding: 0.35rem 0.65rem;
+  margin-top: 0.65rem;
+  flex-wrap: wrap;
+}
+
+.match-officials-bar strong {
+  color: var(--text-main);
+}
