@@ -1,0 +1,610 @@
+{
+  "tournament": {
+    "id": "community-cup-s2",
+    "name": "Community Cup",
+    "subTitle": "Championship Season 2",
+    "date": "Saturday, November 7, 2026",
+    "startTime": "05:00 PM",
+    "endTime": "08:00 PM",
+    "venue": "Athletes Sports Arena, Nirala Nagar, Lucknow",
+    "organizers": "Community Cup Organizing Committee",
+    "contacts": [
+      "9569775726",
+      "9721653511",
+      "9906285436"
+    ],
+    "logo": "images/tournament_logo.jpg",
+    "turfSlot": "5:00 PM \u2013 8:00 PM (Strict 3-Hour Slot)"
+  },
+  "fluidSeedingMode": "live",
+  "teams": [
+    {
+      "id": "inter_babuganj",
+      "name": "Inter Babuganj",
+      "shortName": "INTER",
+      "group": "A",
+      "logo": "images/inter_babuganj.jpg",
+      "themeColor": "#f59e0b",
+      "accentColor": "#d97706",
+      "players": [
+        {
+          "id": "ib_1",
+          "name": "Rishit",
+          "number": 1,
+          "position": "Squad"
+        },
+        {
+          "id": "ib_2",
+          "name": "Verma",
+          "number": 2,
+          "position": "Squad"
+        },
+        {
+          "id": "ib_3",
+          "name": "Ghori",
+          "number": 3,
+          "position": "Squad"
+        },
+        {
+          "id": "ib_4",
+          "name": "Krish",
+          "number": 4,
+          "position": "Squad"
+        },
+        {
+          "id": "ib_5",
+          "name": "Lamine",
+          "number": 5,
+          "position": "Squad"
+        },
+        {
+          "id": "ib_6",
+          "name": "Moon",
+          "number": 6,
+          "position": "Squad"
+        },
+        {
+          "id": "ib_7",
+          "name": "Abhishek",
+          "number": 7,
+          "position": "Squad",
+          "isHonorary": true,
+          "note": "In Respect & Love (Non-playing)"
+        }
+      ]
+    },
+    {
+      "id": "empire_state",
+      "name": "Empire State FC",
+      "shortName": "EMPIRE",
+      "group": "A",
+      "logo": "images/empire_state.jpg",
+      "themeColor": "#38bdf8",
+      "accentColor": "#0284c7",
+      "players": [
+        {
+          "id": "es_1",
+          "name": "Tanmay",
+          "number": 1,
+          "position": "Squad"
+        },
+        {
+          "id": "es_2",
+          "name": "Rounak",
+          "number": 2,
+          "position": "Squad"
+        },
+        {
+          "id": "es_3",
+          "name": "Ronit",
+          "number": 3,
+          "position": "Squad"
+        },
+        {
+          "id": "es_4",
+          "name": "Vidit",
+          "number": 4,
+          "position": "Squad"
+        },
+        {
+          "id": "es_5",
+          "name": "Chirag",
+          "number": 5,
+          "position": "Squad"
+        },
+        {
+          "id": "es_6",
+          "name": "Chetan",
+          "number": 6,
+          "position": "Squad"
+        }
+      ]
+    },
+    {
+      "id": "soviet_union",
+      "name": "Soviet Union FC",
+      "shortName": "SOVIET",
+      "group": "A",
+      "logo": "images/soviet_union.jpg",
+      "themeColor": "#ef4444",
+      "accentColor": "#b91c1c",
+      "players": [
+        {
+          "id": "su_1",
+          "name": "Adi",
+          "number": 1,
+          "position": "Squad"
+        },
+        {
+          "id": "su_2",
+          "name": "Adu",
+          "number": 2,
+          "position": "Squad"
+        },
+        {
+          "id": "su_3",
+          "name": "Om",
+          "number": 3,
+          "position": "Squad"
+        },
+        {
+          "id": "su_4",
+          "name": "Shubbu",
+          "number": 4,
+          "position": "Squad"
+        },
+        {
+          "id": "su_5",
+          "name": "Parth",
+          "number": 5,
+          "position": "Squad"
+        }
+      ]
+    },
+    {
+      "id": "fc_nai_basti",
+      "name": "FC Nai Basti",
+      "shortName": "NAI BASTI",
+      "group": "B",
+      "logo": "images/fc_nai_basti.jpg",
+      "themeColor": "#94a3b8",
+      "accentColor": "#64748b",
+      "players": [
+        {
+          "id": "nb_1",
+          "name": "Saurabh",
+          "number": 1,
+          "position": "Squad"
+        },
+        {
+          "id": "nb_2",
+          "name": "Arnav",
+          "number": 2,
+          "position": "Squad"
+        },
+        {
+          "id": "nb_3",
+          "name": "Romi",
+          "number": 3,
+          "position": "Squad"
+        },
+        {
+          "id": "nb_4",
+          "name": "Small Aman",
+          "number": 4,
+          "position": "Squad"
+        },
+        {
+          "id": "nb_5",
+          "name": "Ayush",
+          "number": 5,
+          "position": "Squad"
+        },
+        {
+          "id": "nb_6",
+          "name": "God Ji",
+          "number": 6,
+          "position": "Squad"
+        }
+      ]
+    },
+    {
+      "id": "babuganj_united",
+      "name": "Babuganj United",
+      "shortName": "BABUGANJ UTD",
+      "group": "B",
+      "logo": "images/babuganj_united.jpg",
+      "themeColor": "#3b82f6",
+      "accentColor": "#1d4ed8",
+      "players": [
+        {
+          "id": "bu_1",
+          "name": "Arjun",
+          "number": 1,
+          "position": "Squad"
+        },
+        {
+          "id": "bu_2",
+          "name": "Paavan",
+          "number": 2,
+          "position": "Squad"
+        },
+        {
+          "id": "bu_3",
+          "name": "Pathri",
+          "number": 3,
+          "position": "Squad"
+        },
+        {
+          "id": "bu_4",
+          "name": "WhiteAyus",
+          "number": 4,
+          "position": "Squad"
+        },
+        {
+          "id": "bu_5",
+          "name": "Shardul",
+          "number": 5,
+          "position": "Squad"
+        },
+        {
+          "id": "bu_6",
+          "name": "Zayn Malik",
+          "number": 6,
+          "position": "Squad"
+        },
+        {
+          "id": "bu_7",
+          "name": "Big Aman",
+          "number": 7,
+          "position": "Squad",
+          "isHonorary": true,
+          "note": "In Respect & Love (Non-playing)"
+        }
+      ]
+    },
+    {
+      "id": "sfc_fc",
+      "name": "SFC FC",
+      "shortName": "SFC FC",
+      "group": "B",
+      "logo": "images/sfc_fc.jpg",
+      "themeColor": "#60a5fa",
+      "accentColor": "#2563eb",
+      "players": [
+        {
+          "id": "sfc_1",
+          "name": "Aarav",
+          "number": 1,
+          "position": "Squad"
+        },
+        {
+          "id": "sfc_2",
+          "name": "Chandransh",
+          "number": 2,
+          "position": "Squad"
+        },
+        {
+          "id": "sfc_3",
+          "name": "Devanju",
+          "number": 3,
+          "position": "Squad"
+        },
+        {
+          "id": "sfc_4",
+          "name": "Divyansh",
+          "number": 4,
+          "position": "Squad"
+        },
+        {
+          "id": "sfc_5",
+          "name": "Ishaan",
+          "number": 5,
+          "position": "Squad"
+        },
+        {
+          "id": "sfc_6",
+          "name": "Jagrat",
+          "number": 6,
+          "position": "Squad"
+        }
+      ]
+    }
+  ],
+  "matches": [
+    {
+      "id": "M1",
+      "matchNumber": 1,
+      "stage": "group",
+      "group": "A",
+      "stageLabel": "Group A - Matchday 1",
+      "time": "05:00 PM",
+      "duration": "10m",
+      "team1Id": "inter_babuganj",
+      "team2Id": "empire_state",
+      "team1Placeholder": null,
+      "team2Placeholder": null,
+      "status": "scheduled",
+      "team1Score": 0,
+      "team2Score": 0,
+      "penalties": null,
+      "events": [],
+      "notes": "05:00 - 05:10 PM \u2022 3m quick change"
+    },
+    {
+      "id": "M2",
+      "matchNumber": 2,
+      "stage": "group",
+      "group": "B",
+      "stageLabel": "Group B - Matchday 1",
+      "time": "05:13 PM",
+      "duration": "10m",
+      "team1Id": "fc_nai_basti",
+      "team2Id": "babuganj_united",
+      "team1Placeholder": null,
+      "team2Placeholder": null,
+      "status": "scheduled",
+      "team1Score": 0,
+      "team2Score": 0,
+      "penalties": null,
+      "events": [],
+      "notes": "05:13 - 05:23 PM \u2022 Group A resting"
+    },
+    {
+      "id": "M3",
+      "matchNumber": 3,
+      "stage": "group",
+      "group": "A",
+      "stageLabel": "Group A - Matchday 2",
+      "time": "05:26 PM",
+      "duration": "10m",
+      "team1Id": "empire_state",
+      "team2Id": "soviet_union",
+      "team1Placeholder": null,
+      "team2Placeholder": null,
+      "status": "scheduled",
+      "team1Score": 0,
+      "team2Score": 0,
+      "penalties": null,
+      "events": [],
+      "notes": "05:26 - 05:36 PM \u2022 Empire State rested"
+    },
+    {
+      "id": "M4",
+      "matchNumber": 4,
+      "stage": "group",
+      "group": "B",
+      "stageLabel": "Group B - Matchday 2",
+      "time": "05:39 PM",
+      "duration": "10m",
+      "team1Id": "babuganj_united",
+      "team2Id": "sfc_fc",
+      "team1Placeholder": null,
+      "team2Placeholder": null,
+      "status": "scheduled",
+      "team1Score": 0,
+      "team2Score": 0,
+      "penalties": null,
+      "events": [],
+      "notes": "05:39 - 05:49 PM \u2022 Babuganj rested"
+    },
+    {
+      "id": "M5",
+      "matchNumber": 5,
+      "stage": "group",
+      "group": "A",
+      "stageLabel": "Group A - Matchday 3",
+      "time": "05:52 PM",
+      "duration": "10m",
+      "team1Id": "soviet_union",
+      "team2Id": "inter_babuganj",
+      "team1Placeholder": null,
+      "team2Placeholder": null,
+      "status": "scheduled",
+      "team1Score": 0,
+      "team2Score": 0,
+      "penalties": null,
+      "events": [],
+      "notes": "05:52 - 06:02 PM \u2022 Group A Decider"
+    },
+    {
+      "id": "M6",
+      "matchNumber": 6,
+      "stage": "group",
+      "group": "B",
+      "stageLabel": "Group B - Matchday 3",
+      "time": "06:05 PM",
+      "duration": "10m",
+      "team1Id": "sfc_fc",
+      "team2Id": "fc_nai_basti",
+      "team1Placeholder": null,
+      "team2Placeholder": null,
+      "status": "scheduled",
+      "team1Score": 0,
+      "team2Score": 0,
+      "penalties": null,
+      "events": [],
+      "notes": "06:05 - 06:15 PM \u2022 Group B Decider"
+    },
+    {
+      "id": "M7",
+      "matchNumber": 7,
+      "stage": "qualifier",
+      "group": null,
+      "stageLabel": "Playoff Qualifier 1",
+      "time": "06:21 PM",
+      "duration": "12m",
+      "team1Id": null,
+      "team2Id": null,
+      "seedCode1": "A2",
+      "seedCode2": "B3",
+      "team1Placeholder": "2nd Place Group A",
+      "team2Placeholder": "3rd Place Group B",
+      "ruleTeam1": {
+        "type": "group_rank",
+        "group": "A",
+        "rank": 2
+      },
+      "ruleTeam2": {
+        "type": "group_rank",
+        "group": "B",
+        "rank": 3
+      },
+      "status": "scheduled",
+      "team1Score": 0,
+      "team2Score": 0,
+      "penalties": null,
+      "events": [],
+      "notes": "06:21 - 06:33 PM \u2022 Winner to SF 2"
+    },
+    {
+      "id": "M8",
+      "matchNumber": 8,
+      "stage": "qualifier",
+      "group": null,
+      "stageLabel": "Playoff Qualifier 2",
+      "time": "06:36 PM",
+      "duration": "12m",
+      "team1Id": null,
+      "team2Id": null,
+      "seedCode1": "B2",
+      "seedCode2": "A3",
+      "team1Placeholder": "2nd Place Group B",
+      "team2Placeholder": "3rd Place Group A",
+      "ruleTeam1": {
+        "type": "group_rank",
+        "group": "B",
+        "rank": 2
+      },
+      "ruleTeam2": {
+        "type": "group_rank",
+        "group": "A",
+        "rank": 3
+      },
+      "status": "scheduled",
+      "team1Score": 0,
+      "team2Score": 0,
+      "penalties": null,
+      "events": [],
+      "notes": "06:36 - 06:48 PM \u2022 Winner to SF 1"
+    },
+    {
+      "id": "M9",
+      "matchNumber": 9,
+      "stage": "semifinal",
+      "group": null,
+      "stageLabel": "Semi-Final 1",
+      "time": "06:52 PM",
+      "duration": "15m",
+      "team1Id": null,
+      "team2Id": null,
+      "seedCode1": "A1",
+      "seedCode2": "W-Q2",
+      "team1Placeholder": "1st Place Group A (Direct Bye)",
+      "team2Placeholder": "Winner Qualifier 2",
+      "ruleTeam1": {
+        "type": "group_rank",
+        "group": "A",
+        "rank": 1
+      },
+      "ruleTeam2": {
+        "type": "match_winner",
+        "matchId": "M8"
+      },
+      "status": "scheduled",
+      "team1Score": 0,
+      "team2Score": 0,
+      "penalties": null,
+      "events": [],
+      "notes": "06:52 - 07:07 PM \u2022 Winner to Final"
+    },
+    {
+      "id": "M10",
+      "matchNumber": 10,
+      "stage": "semifinal",
+      "group": null,
+      "stageLabel": "Semi-Final 2",
+      "time": "07:10 PM",
+      "duration": "15m",
+      "team1Id": null,
+      "team2Id": null,
+      "seedCode1": "B1",
+      "seedCode2": "W-Q1",
+      "team1Placeholder": "1st Place Group B (Direct Bye)",
+      "team2Placeholder": "Winner Qualifier 1",
+      "ruleTeam1": {
+        "type": "group_rank",
+        "group": "B",
+        "rank": 1
+      },
+      "ruleTeam2": {
+        "type": "match_winner",
+        "matchId": "M7"
+      },
+      "status": "scheduled",
+      "team1Score": 0,
+      "team2Score": 0,
+      "penalties": null,
+      "events": [],
+      "notes": "07:10 - 07:25 PM \u2022 Winner to Final"
+    },
+    {
+      "id": "M11",
+      "matchNumber": 11,
+      "stage": "third_place",
+      "group": null,
+      "stageLabel": "Bronze Medal / 3rd Place",
+      "time": "07:29 PM",
+      "duration": "10m",
+      "team1Id": null,
+      "team2Id": null,
+      "seedCode1": "L-SF1",
+      "seedCode2": "L-SF2",
+      "team1Placeholder": "Loser Semi-Final 1",
+      "team2Placeholder": "Loser Semi-Final 2",
+      "ruleTeam1": {
+        "type": "match_loser",
+        "matchId": "M9"
+      },
+      "ruleTeam2": {
+        "type": "match_loser",
+        "matchId": "M10"
+      },
+      "status": "scheduled",
+      "team1Score": 0,
+      "team2Score": 0,
+      "penalties": null,
+      "events": [],
+      "notes": "07:29 - 07:39 PM \u2022 Bronze decider"
+    },
+    {
+      "id": "M12",
+      "matchNumber": 12,
+      "stage": "final",
+      "group": null,
+      "stageLabel": "Grand Final - Championship Trophy",
+      "time": "07:43 PM",
+      "duration": "15m",
+      "team1Id": null,
+      "team2Id": null,
+      "seedCode1": "W-SF1",
+      "seedCode2": "W-SF2",
+      "team1Placeholder": "Winner Semi-Final 1",
+      "team2Placeholder": "Winner Semi-Final 2",
+      "ruleTeam1": {
+        "type": "match_winner",
+        "matchId": "M9"
+      },
+      "ruleTeam2": {
+        "type": "match_winner",
+        "matchId": "M10"
+      },
+      "status": "scheduled",
+      "team1Score": 0,
+      "team2Score": 0,
+      "penalties": null,
+      "events": [],
+      "notes": "07:43 - 07:58 PM \u2022 Championship Cup Final"
+    }
+  ]
+}

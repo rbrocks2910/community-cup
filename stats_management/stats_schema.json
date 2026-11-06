@@ -1,0 +1,80 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CommunityCupTournamentStatsSchema",
+  "type": "object",
+  "properties": {
+    "tournament": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "edition": { "type": "string" },
+        "venue": { "type": "string" },
+        "date": { "type": "string" },
+        "contacts": { "type": "array", "items": { "type": "string" } }
+      },
+      "required": ["id", "name", "venue", "date"]
+    },
+    "teams": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "group": { "type": "string", "enum": ["A", "B"] },
+          "logo": { "type": "string" },
+          "players": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": { "type": "string" },
+                "name": { "type": "string" },
+                "number": { "type": "integer" },
+                "position": { "type": "string", "enum": ["GK", "DF", "MF", "FW", "SUB"] }
+              },
+              "required": ["id", "name", "position"]
+            }
+          }
+        },
+        "required": ["id", "name", "group", "players"]
+      }
+    },
+    "matches": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "matchNumber": { "type": "integer" },
+          "stage": { "type": "string", "enum": ["group", "qualifier", "semifinal", "third_place", "final"] },
+          "group": { "type": ["string", "null"] },
+          "time": { "type": "string" },
+          "team1Id": { "type": ["string", "null"] },
+          "team2Id": { "type": ["string", "null"] },
+          "status": { "type": "string", "enum": ["scheduled", "live", "finished"] },
+          "team1Score": { "type": "integer" },
+          "team2Score": { "type": "integer" },
+          "events": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": { "type": "string" },
+                "type": { "type": "string", "enum": ["goal", "own_goal", "assist", "save", "yellow_card", "red_card"] },
+                "teamId": { "type": "string" },
+                "playerId": { "type": "string" },
+                "assistPlayerId": { "type": ["string", "null"] },
+                "minute": { "type": "integer" }
+              },
+              "required": ["id", "type", "teamId", "playerId", "minute"]
+            }
+          }
+        },
+        "required": ["id", "matchNumber", "stage", "status", "events"]
+      }
+    }
+  },
+  "required": ["tournament", "teams", "matches"]
+}

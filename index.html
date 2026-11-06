@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Community Cup • Season 2</title>
+  <link rel="icon" type="image/jpeg" href="images/tournament_logo.jpg" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <!-- TOP APP BAR -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand-group" onclick="switchTab('overview')" style="cursor:pointer;">
+        <img src="images/tournament_logo.jpg" alt="Logo" class="brand-crest" onerror="this.src='photo_2026-11-06_21-37-48.jpg'" />
+        <div>
+          <h1 class="brand-title">Community Cup</h1>
+          <div class="brand-subtitle">Season 2</div>
+        </div>
+      </div>
+
+      <!-- DESKTOP NAV -->
+      <nav class="desktop-nav">
+        <button class="nav-link active" data-tab="overview">Overview</button>
+        <button class="nav-link" data-tab="matches">Matches</button>
+        <button class="nav-link" data-tab="standings">Standings</button>
+        <button class="nav-link" data-tab="bracket">Bracket</button>
+        <button class="nav-link" data-tab="squads">Squads</button>
+        <button class="nav-link" data-tab="leaderboards">Stats</button>
+        <button class="nav-link" data-tab="settings">Backup</button>
+      </nav>
+
+      <div>
+        <button class="btn btn-gold btn-sm" onclick="openLoggerModal('M1')">
+          ⚡ Log Stats
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MOBILE BOTTOM THUMB NAV -->
+  <nav class="mobile-bottom-nav">
+    <button class="mobile-tab-btn active" data-tab="overview">
+      <span class="icon">🏠</span>
+      <span>Home</span>
+    </button>
+    <button class="mobile-tab-btn" data-tab="matches">
+      <span class="icon">⚽</span>
+      <span>Matches</span>
+    </button>
+    <button class="mobile-tab-btn" data-tab="standings">
+      <span class="icon">🏆</span>
+      <span>Tables</span>
+    </button>
+    <button class="mobile-tab-btn" data-tab="bracket">
+      <span class="icon">🌲</span>
+      <span>Bracket</span>
+    </button>
+    <button class="mobile-tab-btn" data-tab="squads">
+      <span class="icon">👥</span>
+      <span>Squads</span>
+    </button>
+    <button class="mobile-tab-btn" data-tab="leaderboards">
+      <span class="icon">📊</span>
+      <span>Stats</span>
+    </button>
+  </nav>
+
+  <!-- MAIN BODY CONTAINER -->
+  <main class="main-container">
+
+    <!-- TAB 1: OVERVIEW -->
+    <section id="tab-overview" class="tab-pane active">
+      <div class="tournament-hero-card">
+        <div class="hero-header-row">
+          <div>
+            <div style="font-size:0.75rem; font-weight:800; color:var(--gold); text-transform:uppercase;">Official Championship</div>
+            <h2 class="event-headline">Community Cup Season 2</h2>
+          </div>
+          <button class="btn btn-gold btn-sm" onclick="switchTab('matches')">
+            View Schedule
+          </button>
+        </div>
+
+        <div class="event-details-row">
+          <div class="event-detail-item">
+            <span>📅</span>
+            <span>Saturday, 7 November 2026 • 5:00 PM</span>
+          </div>
+          <div class="event-detail-item">
+            <span>📍</span>
+            <span>Athletes Sports Arena, Nirala Nagar, Lucknow</span>
+          </div>
+        </div>
+
+        <!-- 6 TEAMS STRIP -->
+        <div>
+          <div style="font-size:0.75rem; font-weight:700; color:var(--text-dim); text-transform:uppercase; margin-bottom:0.4rem;">
+            6 Competing Clubs
+          </div>
+          <div class="clubs-strip" id="clubs-strip-container">
+            <!-- Injected via JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- SPOTLIGHT: UPCOMING MATCH -->
+      <div class="view-header">
+        <h3 class="view-title">Next Fixture</h3>
+      </div>
+      <div id="overview-spotlight-match" class="match-card" style="margin-bottom:1.5rem;">
+        <!-- Injected via JS -->
+      </div>
+    </section>
+
+    <!-- TAB 2: MATCHES & SCHEDULE -->
+    <section id="tab-matches" class="tab-pane">
+      <div class="view-header">
+        <h2 class="view-title">Match Fixtures</h2>
+        <p class="view-desc">12-Match Tournament Roadmap</p>
+      </div>
+
+      <!-- FILTER TABS -->
+      <div style="display:flex; gap:0.4rem; overflow-x:auto; padding-bottom:0.6rem; margin-bottom:1rem;">
+        <button class="btn btn-dark btn-sm active-filter" data-filter="all" onclick="filterMatches('all', this)">All (12)</button>
+        <button class="btn btn-dark btn-sm" data-filter="group" onclick="filterMatches('group', this)">Group (6)</button>
+        <button class="btn btn-dark btn-sm" data-filter="qualifiers" onclick="filterMatches('qualifiers', this)">Qualifiers (2)</button>
+        <button class="btn btn-dark btn-sm" data-filter="semis" onclick="filterMatches('semis', this)">Semis (2)</button>
+        <button class="btn btn-dark btn-sm" data-filter="finals" onclick="filterMatches('finals', this)">Finals (2)</button>
+      </div>
+
+      <div class="matches-list" id="matches-list-container">
+        <!-- Injected via JS -->
+      </div>
+    </section>
+
+    <!-- TAB 3: STANDINGS -->
+    <section id="tab-standings" class="tab-pane">
+      <div class="view-header">
+        <h2 class="view-title">Points Tables</h2>
+        <p class="view-desc">1st advances to Semifinals • 2nd & 3rd to Qualifiers</p>
+      </div>
+
+      <div class="standings-grid">
+        <!-- GROUP A -->
+        <div class="standings-table-card">
+          <div class="table-header-bar">
+            <strong style="color:var(--gold);">GROUP A</strong>
+            <span style="font-size:0.75rem; color:var(--text-dim);">3 Matches</span>
+          </div>
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th style="width:30px;">#</th>
+                  <th style="text-align:left;">Club</th>
+                  <th>P</th>
+                  <th>W</th>
+                  <th>D</th>
+                  <th>L</th>
+                  <th>GD</th>
+                  <th>Pts</th>
+                </tr>
+              </thead>
+              <tbody id="table-body-a">
+                <!-- Injected via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- GROUP B -->
+        <div class="standings-table-card">
+          <div class="table-header-bar">
+            <strong style="color:var(--cyan);">GROUP B</strong>
+            <span style="font-size:0.75rem; color:var(--text-dim);">3 Matches</span>
+          </div>
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th style="width:30px;">#</th>
+                  <th style="text-align:left;">Club</th>
+                  <th>P</th>
+                  <th>W</th>
+                  <th>D</th>
+                  <th>L</th>
+                  <th>GD</th>
+                  <th>Pts</th>
+                </tr>
+              </thead>
+              <tbody id="table-body-b">
+                <!-- Injected via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4: KNOCKOUT BRACKET -->
+    <section id="tab-bracket" class="tab-pane">
+      <div class="view-header">
+        <h2 class="view-title">Knockout Pathway</h2>
+        <p class="view-desc">Automatic progression based on group standings</p>
+      </div>
+
+      <div class="bracket-scroll-wrapper">
+        <div class="bracket-container" id="bracket-container">
+          <!-- Injected via JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 5: SQUADS -->
+    <section id="tab-squads" class="tab-pane">
+      <div class="view-header">
+        <h2 class="view-title">Club Squads</h2>
+        <p class="view-desc">Select any team to view or edit players</p>
+      </div>
+
+      <div class="squad-nav-strip" id="squad-nav-strip">
+        <!-- Injected via JS -->
+      </div>
+
+      <div class="roster-card" id="squad-roster-container">
+        <!-- Injected via JS -->
+      </div>
+    </section>
+
+    <!-- TAB 6: LEADERBOARDS -->
+    <section id="tab-leaderboards" class="tab-pane">
+      <div class="view-header">
+        <h2 class="view-title">Tournament Leaderboards</h2>
+        <p class="view-desc">Goals, Assists, Goalkeeper Saves & Cards</p>
+      </div>
+
+      <div class="leaderboards-grid" id="leaderboards-container">
+        <!-- Injected via JS -->
+      </div>
+    </section>
+
+    <!-- TAB 7: DATA & BACKUP -->
+    <section id="tab-settings" class="tab-pane">
+      <div class="view-header">
+        <h2 class="view-title">Data Management</h2>
+        <p class="view-desc">Export JSON backups or reset data</p>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:1rem; max-width:480px;">
+        <button class="btn btn-cyan" id="btn-export-backup">
+          ⬇️ Export Tournament JSON Backup
+        </button>
+        <label class="btn btn-dark" style="cursor:pointer; text-align:center;">
+          ⬆️ Import Tournament JSON Backup
+          <input type="file" id="file-import-backup" accept=".json" style="display:none;" />
+        </label>
+        <button class="btn btn-danger" id="btn-reset-tournament">
+          🔄 Reset Tournament Data
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FLOATING QUICK LOGGER BUTTON -->
+  <button class="fab-logger" onclick="openLoggerModal('M1')" title="Open Match Stats Console">
+    <span>⚡</span>
+    <span>Log Stats</span>
+  </button>
+
+  <!-- STATS LOGGER DRAWER / MOBILE BOTTOM SHEET -->
+  <div class="drawer-overlay" id="logger-drawer-overlay"></div>
+  <aside class="drawer-container" id="logger-drawer">
+    <div class="sheet-handle-bar"></div>
+    <div class="drawer-header">
+      <strong style="color:var(--gold); font-size:1rem;">⚡ Match Stats Console</strong>
+      <button class="btn btn-dark btn-sm" onclick="closeLoggerModal()">✕ Close</button>
+    </div>
+
+    <div class="drawer-content" id="logger-drawer-content">
+      <!-- Injected via JS -->
+    </div>
+  </aside>
+
+  <!-- TOAST -->
+  <div class="toast-msg" id="app-toast"></div>
+
+  <!-- SCRIPTS -->
+  <script src="js/initialData.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
