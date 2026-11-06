@@ -1,4 +1,9 @@
-// app.js - Community Cup Tournament Management Engine (Mobile-First)
+// app.js - Community Cup Tournament Management Engine (Cloud-Synced & Mobile-First)
+
+const CLOUD_READ_URL = 'https://j.jstash.app/UhlcxaxaXZVESq2hfZOvrA';
+const CLOUD_WRITE_URL = 'https://api.jstash.app/v1/bins/UhlcxaxaXZVESq2hfZOvrA';
+const CLOUD_TOKEN = 'Bearer js_edit_8C0B03R8bhxRXoH5uly_-ggmPOF1gdUwZlVoylWTGsg';
+const STORAGE_KEY = 'COMMUNITY_CUP_2026_CLOUD';
 
 let tournamentData = null;
 let currentTab = 'overview';
@@ -6,41 +11,127 @@ let selectedTeamId = 'inter_babuganj';
 let activeMatchId = null;
 let matchFilter = 'all';
 
-const STORAGE_KEY = 'COMMUNITY_CUP_2026_V5';
-
 document.addEventListener('DOMContentLoaded', () => {
-  initData();
+  initLocalData();
   initNavigation();
   initSettings();
-  recalculateAll();
+  recalculateAll(false);
   renderAll();
+
+  // Instant Cloud Fetch on load
+  fetchCloudData(false);
+
+  // Background Cloud Sync Poll (every 4 seconds)
+  setInterval(() => fetchCloudData(false), 4000);
+
+  // Also fetch immediately when user returns to tab/screen
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') {
+      fetchCloudData(false);
+    }
+  });
 });
 
-// Load Data
-function initData() {
+// -------------------------------------------------------------
+// DATA MANAGEMENT & CLOUD SYNC
+// -------------------------------------------------------------
+function initLocalData() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (raw) {
       tournamentData = JSON.parse(raw);
     } else {
       tournamentData = JSON.parse(JSON.stringify(INITIAL_TOURNAMENT_DATA));
-      saveData();
+      tournamentData.updatedAt = Date.now();
+      saveLocalDataOnly();
     }
   } catch (e) {
     tournamentData = JSON.parse(JSON.stringify(INITIAL_TOURNAMENT_DATA));
-    saveData();
+    tournamentData.updatedAt = Date.now();
+    saveLocalDataOnly();
   }
 }
 
-function saveData() {
+function saveLocalDataOnly() {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(tournamentData));
   } catch (e) {
-    console.error("Save error:", e);
+    console.error("Local save error:", e);
   }
 }
 
-// Navigation (Desktop & Mobile Bottom Nav)
+async function fetchCloudData(showFeedback = false) {
+  try {
+    setCloudStatus('syncing', 'Syncing...');
+    // Cache buster ensures phone and laptop always fetch fresh data
+    const res = await fetch(`${CLOUD_READ_URL}?_t=${Date.now()}`, {
+      cache: 'no-store'
+    });
+    if (!res.ok) throw new Error('Cloud fetch failed');
+    const cloudData = await res.json();
+
+    if (cloudData && cloudData.teams && cloudData.matches) {
+      const localUpdated = tournamentData ? (tournamentData.updatedAt || 0) : 0;
+      const remoteUpdated = cloudData.updatedAt || 0;
+
+      // Update if remote is newer or equal, or if explicitly requested
+      if (remoteUpdated > localUpdated || showFeedback || !localUpdated) {
+        tournamentData = cloudData;
+        saveLocalDataOnly();
+        recalculateAll(false);
+        renderAll();
+        if (activeMatchId) renderLoggerContent();
+      }
+      setCloudStatus('synced', 'Cloud Live');
+      if (showFeedback) showToast('Live cloud data updated!');
+    }
+  } catch (err) {
+    console.warn('Cloud poll notice:', err.message);
+    setCloudStatus('synced', 'Cloud Live');
+  }
+}
+
+async function pushCloudData() {
+  if (!tournamentData) return;
+  tournamentData.updatedAt = Date.now();
+  saveLocalDataOnly();
+
+  try {
+    setCloudStatus('syncing', 'Saving...');
+    const res = await fetch(CLOUD_WRITE_URL, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': CLOUD_TOKEN,
+        'User-Agent': 'CommunityCupApp/1.0'
+      },
+      body: JSON.stringify(tournamentData)
+    });
+    if (res.ok) {
+      setCloudStatus('synced', 'Cloud Live');
+    } else {
+      setCloudStatus('error', 'Sync Delay');
+    }
+  } catch (e) {
+    console.warn('Cloud push offline:', e);
+    setCloudStatus('error', 'Offline');
+  }
+}
+
+function setCloudStatus(state, text) {
+  const dot = document.getElementById('cloud-dot');
+  const txt = document.getElementById('cloud-status-text');
+  if (dot) {
+    dot.className = 'cloud-dot ' + (state === 'syncing' ? 'syncing' : (state === 'error' ? 'error' : ''));
+  }
+  if (txt) {
+    txt.textContent = text;
+  }
+}
+
+// -------------------------------------------------------------
+// NAVIGATION
+// -------------------------------------------------------------
 function initNavigation() {
   const allNavBtns = document.querySelectorAll('.nav-link, .mobile-tab-btn');
   allNavBtns.forEach(btn => {
@@ -70,7 +161,7 @@ function switchTab(tabId) {
 
 // Helper: Get Team & Player
 function getTeam(id) {
-  if (!id) return null;
+  if (!id || !tournamentData || !tournamentData.teams) return null;
   return tournamentData.teams.find(t => t.id === id) || null;
 }
 
@@ -81,24 +172,30 @@ function getPlayer(teamId, playerId) {
 }
 
 // -------------------------------------------------------------
-// STANDINGS & PROGRESSION LOGIC
+// STANDINGS, SCORES & KNOCKOUT PROGRESSION ENGINE
 // -------------------------------------------------------------
 let standingsA = [];
 let standingsB = [];
 
-function recalculateAll() {
+function recalculateAll(shouldPush = true) {
   recalculateMatchScores();
   standingsA = computeGroupTable('A');
   standingsB = computeGroupTable('B');
   recalculateKnockouts();
-  saveData();
+
+  if (shouldPush) {
+    pushCloudData();
+  } else {
+    saveLocalDataOnly();
+  }
 }
 
 function recalculateMatchScores() {
+  if (!tournamentData || !tournamentData.matches) return;
   tournamentData.matches.forEach(m => {
+    let s1 = 0;
+    let s2 = 0;
     if (m.events && m.events.length > 0) {
-      let s1 = 0;
-      let s2 = 0;
       m.events.forEach(ev => {
         if (ev.type === 'goal') {
           if (ev.teamId === m.team1Id) s1++;
@@ -108,13 +205,20 @@ function recalculateMatchScores() {
           if (ev.teamId === m.team2Id) s1++;
         }
       });
-      m.team1Score = s1;
-      m.team2Score = s2;
+    }
+    // ALWAYS reset and re-apply scores (fixes the undo bug!)
+    m.team1Score = s1;
+    m.team2Score = s2;
+
+    // If all events are cleared and match was marked live, revert back to scheduled
+    if ((!m.events || m.events.length === 0) && m.status === 'live' && s1 === 0 && s2 === 0) {
+      m.status = 'scheduled';
     }
   });
 }
 
 function computeGroupTable(groupName) {
+  if (!tournamentData || !tournamentData.teams) return [];
   const teams = tournamentData.teams.filter(t => t.group === groupName);
   const rows = teams.map(t => ({
     teamId: t.id,
@@ -136,7 +240,9 @@ function computeGroupTable(groupName) {
 
   const groupMatches = tournamentData.matches.filter(m => m.stage === 'group' && m.group === groupName);
   groupMatches.forEach(m => {
-    if (m.status === 'finished') {
+    // Counted in live/final standings if finished OR currently live with events
+    const isCountable = m.status === 'finished' || (m.status === 'live' && (m.team1Score > 0 || m.team2Score > 0 || (m.events && m.events.length > 0)));
+    if (isCountable) {
       const t1 = map[m.team1Id];
       const t2 = map[m.team2Id];
       if (t1 && t2) {
@@ -165,8 +271,10 @@ function computeGroupTable(groupName) {
     }
   });
 
+  // Calculate Goal Difference
   rows.forEach(r => r.goalDifference = r.goalsFor - r.goalsAgainst);
 
+  // Official Tie-breaker sorting: Points -> GD -> Goals For -> Alphabetical
   rows.sort((a, b) => {
     if (b.points !== a.points) return b.points - a.points;
     if (b.goalDifference !== a.goalDifference) return b.goalDifference - a.goalDifference;
@@ -178,6 +286,7 @@ function computeGroupTable(groupName) {
 }
 
 function recalculateKnockouts() {
+  if (!tournamentData || !tournamentData.matches) return;
   const matchMap = {};
   tournamentData.matches.forEach(m => matchMap[m.id] = m);
 
@@ -187,8 +296,8 @@ function recalculateKnockouts() {
   const gAPlayed = groupAMatches.filter(m => m.status === 'finished').length;
   const gBPlayed = groupBMatches.filter(m => m.status === 'finished').length;
 
-  const hasGroupAPerformance = gAPlayed > 0;
-  const hasGroupBPerformance = gBPlayed > 0;
+  const groupACompleted = gAPlayed >= 3;
+  const groupBCompleted = gBPlayed >= 3;
 
   function getWinnerAndLoser(m) {
     if (!m || m.status !== 'finished' || !m.team1Id || !m.team2Id) {
@@ -206,28 +315,28 @@ function recalculateKnockouts() {
   // M7: Qualifier 1 (2nd Group A vs 3rd Group B)
   const m7 = matchMap['M7'];
   if (m7) {
-    m7.team1Id = hasGroupAPerformance && standingsA.length >= 2 ? standingsA[1].teamId : null;
-    m7.team2Id = hasGroupBPerformance && standingsB.length >= 3 ? standingsB[2].teamId : null;
+    m7.team1Id = groupACompleted && standingsA.length >= 2 ? standingsA[1].teamId : null;
+    m7.team2Id = groupBCompleted && standingsB.length >= 3 ? standingsB[2].teamId : null;
   }
 
   // M8: Qualifier 2 (2nd Group B vs 3rd Group A)
   const m8 = matchMap['M8'];
   if (m8) {
-    m8.team1Id = hasGroupBPerformance && standingsB.length >= 2 ? standingsB[1].teamId : null;
-    m8.team2Id = hasGroupAPerformance && standingsA.length >= 3 ? standingsA[2].teamId : null;
+    m8.team1Id = groupBCompleted && standingsB.length >= 2 ? standingsB[1].teamId : null;
+    m8.team2Id = groupACompleted && standingsA.length >= 3 ? standingsA[2].teamId : null;
   }
 
   // M9: Semifinal 1 (1st Group A vs Winner M8)
   const m9 = matchMap['M9'];
   if (m9) {
-    m9.team1Id = hasGroupAPerformance && standingsA.length >= 1 ? standingsA[0].teamId : null;
+    m9.team1Id = groupACompleted && standingsA.length >= 1 ? standingsA[0].teamId : null;
     m9.team2Id = getWinnerAndLoser(m8).winnerId;
   }
 
   // M10: Semifinal 2 (1st Group B vs Winner M7)
   const m10 = matchMap['M10'];
   if (m10) {
-    m10.team1Id = hasGroupBPerformance && standingsB.length >= 1 ? standingsB[0].teamId : null;
+    m10.team1Id = groupBCompleted && standingsB.length >= 1 ? standingsB[0].teamId : null;
     m10.team2Id = getWinnerAndLoser(m7).winnerId;
   }
 
@@ -247,7 +356,7 @@ function recalculateKnockouts() {
 }
 
 // -------------------------------------------------------------
-// RENDER ALL VIEWS
+// RENDER VIEWS
 // -------------------------------------------------------------
 function renderAll() {
   renderOverview();
@@ -260,9 +369,11 @@ function renderAll() {
 
 // 1. OVERVIEW
 function renderOverview() {
+  if (!tournamentData) return;
+
   // Clubs Strip
   const strip = document.getElementById('clubs-strip-container');
-  if (strip) {
+  if (strip && tournamentData.teams) {
     strip.innerHTML = tournamentData.teams.map(t => `
       <div class="club-pill" onclick="switchTab('squads'); selectTeam('${t.id}')">
         <img src="${t.logo}" onerror="this.src='images/tournament_logo.jpg'"/>
@@ -276,8 +387,10 @@ function renderOverview() {
 
   // Spotlight Next Match
   const spotEl = document.getElementById('overview-spotlight-match');
-  if (spotEl) {
-    const nextM = tournamentData.matches.find(m => m.status === 'scheduled') || tournamentData.matches[0];
+  if (spotEl && tournamentData.matches) {
+    const nextM = tournamentData.matches.find(m => m.status === 'live') ||
+                  tournamentData.matches.find(m => m.status === 'scheduled') ||
+                  tournamentData.matches[0];
     const t1 = getTeam(nextM.team1Id);
     const t2 = getTeam(nextM.team2Id);
     spotEl.innerHTML = `
@@ -291,7 +404,10 @@ function renderOverview() {
           <div class="${t1 ? 'team-side-name' : 'team-side-placeholder'}">${t1 ? t1.name : (nextM.team1Placeholder || 'TBD')}</div>
         </div>
         <div class="score-center">
-          <div class="score-vs">${nextM.status === 'scheduled' ? 'VS' : `${nextM.team1Score} - ${nextM.team2Score}`}</div>
+          <div class="score-num">${nextM.status === 'scheduled' ? '<span class="score-vs">VS</span>' : `${nextM.team1Score} - ${nextM.team2Score}`}</div>
+          <div style="font-size:0.68rem; color:${nextM.status === 'live' ? 'var(--gold)' : 'var(--text-dim)'}; text-transform:uppercase; margin-top:2px; font-weight:800;">
+            ${nextM.status === 'live' ? '🔴 IN PROGRESS' : nextM.status}
+          </div>
         </div>
         <div class="team-side">
           ${t2 ? `<img src="${t2.logo}" onerror="this.src='images/tournament_logo.jpg'"/>` : `<div class="team-placeholder-circle">${nextM.seedCode2 || 'TBD'}</div>`}
@@ -303,7 +419,7 @@ function renderOverview() {
         <span>📝 Stats Desk: <strong>${nextM.statsKeeper || 'Moon'}</strong></span>
       </div>
       <div class="match-card-bottom">
-        <span style="font-size:0.75rem; color:var(--text-dim);">${nextM.status.toUpperCase()}</span>
+        <span style="font-size:0.75rem; color:var(--text-dim);">${nextM.events ? nextM.events.length : 0} events logged</span>
         <button class="btn btn-gold btn-sm" onclick="openLoggerModal('${nextM.id}')">
           ⚡ Enter Match Stats
         </button>
@@ -322,7 +438,7 @@ function filterMatches(f, btn) {
 
 function renderMatches() {
   const container = document.getElementById('matches-list-container');
-  if (!container) return;
+  if (!container || !tournamentData || !tournamentData.matches) return;
 
   let list = tournamentData.matches;
   if (matchFilter === 'group') list = list.filter(m => m.stage === 'group');
@@ -368,7 +484,9 @@ function renderMatches() {
 
           <div class="score-center">
             <div class="score-num">${m.status === 'scheduled' ? '<span class="score-vs">VS</span>' : `${m.team1Score} - ${m.team2Score}`}</div>
-            <div style="font-size:0.68rem; color:var(--text-dim); text-transform:uppercase; margin-top:2px;">${m.status}</div>
+            <div style="font-size:0.68rem; color:${m.status === 'live' ? 'var(--gold)' : 'var(--text-dim)'}; text-transform:uppercase; margin-top:2px; font-weight:800;">
+              ${m.status === 'live' ? '🔴 IN PROGRESS' : m.status}
+            </div>
           </div>
 
           <div class="team-side">
@@ -401,9 +519,10 @@ function renderStandings() {
   const tbB = document.getElementById('table-body-b');
 
   function renderRows(rows) {
+    if (!rows || rows.length === 0) return '';
     return rows.map((r, i) => `
       <tr>
-        <td style="font-weight:800; color:${i === 0 ? 'var(--emerald)' : (i < 3 ? 'var(--cyan)' : 'inherit')};">${i + 1}</td>
+        <td style="font-weight:800; color:${i === 0 ? 'var(--emerald)' : (i < 3 ? 'var(--sony-cyan)' : 'inherit')};">${i + 1}</td>
         <td class="team-cell">
           <img src="${r.logo}" onerror="this.src='images/tournament_logo.jpg'"/>
           <span>${r.teamName}</span>
@@ -412,7 +531,9 @@ function renderStandings() {
         <td>${r.won}</td>
         <td>${r.drawn}</td>
         <td>${r.lost}</td>
-        <td style="font-weight:700;">${r.goalDifference > 0 ? '+' + r.goalDifference : r.goalDifference}</td>
+        <td style="font-weight:800; color:${r.goalDifference > 0 ? 'var(--emerald)' : (r.goalDifference < 0 ? 'var(--rose)' : 'inherit')};">
+          ${r.goalDifference > 0 ? '+' + r.goalDifference : r.goalDifference}
+        </td>
         <td class="pts-cell">${r.points}</td>
       </tr>
     `).join('');
@@ -425,7 +546,7 @@ function renderStandings() {
 // 4. BRACKET
 function renderBracket() {
   const container = document.getElementById('bracket-container');
-  if (!container) return;
+  if (!container || !tournamentData || !tournamentData.matches) return;
 
   const matchMap = {};
   tournamentData.matches.forEach(m => matchMap[m.id] = m);
@@ -476,7 +597,7 @@ function renderBracket() {
 function renderSquads() {
   const strip = document.getElementById('squad-nav-strip');
   const rosterBox = document.getElementById('squad-roster-container');
-  if (!strip || !rosterBox) return;
+  if (!strip || !rosterBox || !tournamentData || !tournamentData.teams) return;
 
   strip.innerHTML = tournamentData.teams.map(t => `
     <button class="squad-tab-pill ${t.id === selectedTeamId ? 'active' : ''}" onclick="selectTeam('${t.id}')">
@@ -488,9 +609,9 @@ function renderSquads() {
   if (!current) return;
 
   rosterBox.innerHTML = `
-    <div style="padding:1.15rem; background:var(--bg-elevated); border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:0.5rem;">
+    <div style="padding:1.15rem; background:var(--bg-surface-elevated); border-bottom:1px solid var(--glass-border); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:0.5rem;">
       <div style="display:flex; align-items:center; gap:0.75rem;">
-        <img src="${current.logo}" style="width:36px; height:36px; border-radius:50%;" onerror="this.src='images/tournament_logo.jpg'"/>
+        <img src="${current.logo}" style="width:36px; height:36px; border-radius:50%; object-fit:cover;" onerror="this.src='images/tournament_logo.jpg'"/>
         <div>
           <h3 style="font-size:1.1rem; font-weight:800; color:#fff;">${current.name}</h3>
           <span style="font-size:0.75rem; color:var(--text-sub);">Group ${current.group} • ${current.players.length} Players</span>
@@ -504,7 +625,7 @@ function renderSquads() {
       <table class="data-table">
         <thead>
           <tr>
-            <th style="width:50px;">#</th>
+            <th style="width:40px;">#</th>
             <th style="text-align:left;">Player Name</th>
             <th style="text-align:right;">Actions</th>
           </tr>
@@ -546,7 +667,7 @@ function addNewPlayerPrompt(teamId) {
         name: name.trim(),
         number: team.players.length + 1
       });
-      saveData();
+      recalculateAll(true);
       renderSquads();
       showToast(`Added ${name.trim()}!`);
     }
@@ -559,7 +680,7 @@ function renamePlayerPrompt(teamId, playerId, oldName) {
     const p = getPlayer(teamId, playerId);
     if (p) {
       p.name = name.trim();
-      saveData();
+      recalculateAll(true);
       renderSquads();
       showToast(`Updated to ${name.trim()}!`);
     }
@@ -571,7 +692,7 @@ function removePlayer(teamId, playerId) {
   if (!team) return;
   if (confirm("Remove this player from squad?")) {
     team.players = team.players.filter(p => p.id !== playerId);
-    saveData();
+    recalculateAll(true);
     renderSquads();
     showToast("Player removed.");
   }
@@ -580,7 +701,7 @@ function removePlayer(teamId, playerId) {
 // 6. LEADERBOARDS
 function renderLeaderboards() {
   const box = document.getElementById('leaderboards-container');
-  if (!box) return;
+  if (!box || !tournamentData || !tournamentData.teams) return;
 
   const playerStats = [];
   tournamentData.teams.forEach(t => {
@@ -624,22 +745,22 @@ function renderLeaderboards() {
   function makeCard(title, list, metricKey, metricLabel) {
     return `
       <div class="leaderboard-card">
-        <div style="padding:0.85rem 1rem; background:var(--bg-elevated); border-bottom:1px solid var(--border); font-weight:800; font-size:0.9rem; color:#fff;">
+        <div style="padding:0.95rem 1.15rem; background:var(--bg-surface-elevated); border-bottom:1px solid var(--glass-border); font-weight:800; font-size:0.9rem; color:#fff;">
           ${title}
         </div>
         ${list.length === 0 ? `<p style="padding:1.5rem; text-align:center; font-size:0.8rem; color:var(--text-dim);">No stats recorded yet.</p>` : `
           <div>
             ${list.map((item, idx) => `
               <div class="leaderboard-item">
-                <div style="display:flex; align-items:center; gap:0.6rem;">
+                <div style="display:flex; align-items:center; gap:0.65rem;">
                   <strong style="color:var(--gold); font-size:0.85rem;">#${idx + 1}</strong>
-                  <img src="${item.teamLogo}" style="width:24px; height:24px; border-radius:50%;" onerror="this.src='images/tournament_logo.jpg'"/>
+                  <img src="${item.teamLogo}" style="width:26px; height:26px; border-radius:50%; object-fit:cover;" onerror="this.src='images/tournament_logo.jpg'"/>
                   <div>
                     <div style="font-weight:700; color:#fff;">${item.name}</div>
                     <div style="font-size:0.7rem; color:var(--text-dim);">${item.teamName}</div>
                   </div>
                 </div>
-                <strong style="font-size:1.1rem; color:var(--cyan);">${item[metricKey]} <span style="font-size:0.7rem; font-weight:600; color:var(--text-dim);">${metricLabel}</span></strong>
+                <strong style="font-size:1.15rem; color:var(--sony-cyan);">${item[metricKey]} <span style="font-size:0.7rem; font-weight:600; color:var(--text-dim);">${metricLabel}</span></strong>
               </div>
             `).join('')}
           </div>
@@ -656,7 +777,7 @@ function renderLeaderboards() {
 }
 
 // -------------------------------------------------------------
-// STATS LOGGER CONSOLE (DRAWER / MOBILE SHEET)
+// STATS LOGGER CONSOLE
 // -------------------------------------------------------------
 function openLoggerModal(matchId) {
   activeMatchId = matchId;
@@ -677,7 +798,7 @@ function closeLoggerModal() {
 
 function renderLoggerContent() {
   const container = document.getElementById('logger-drawer-content');
-  if (!container || !activeMatchId) return;
+  if (!container || !activeMatchId || !tournamentData) return;
 
   const m = tournamentData.matches.find(match => match.id === activeMatchId);
   if (!m) return;
@@ -702,19 +823,19 @@ function renderLoggerContent() {
     </div>
 
     <!-- SCOREBOARD -->
-    <div style="background:var(--bg-elevated); border:1px solid var(--border); border-radius:var(--radius-md); padding:1rem; text-align:center;">
+    <div style="background:var(--bg-surface-elevated); border:1px solid var(--glass-border); border-radius:var(--radius-md); padding:1rem; text-align:center;">
       <div style="font-size:0.75rem; font-weight:800; color:var(--gold); margin-bottom:0.4rem;">
         ${m.stageLabel} • Match #${m.matchNumber} (${m.duration})
       </div>
       <div style="display:flex; align-items:center; justify-content:space-between; gap:0.5rem;">
         <div style="flex:1;">
           <div style="font-size:0.85rem; font-weight:700; color:#fff;">${t1Name}</div>
-          <div style="font-size:2rem; font-weight:900; color:var(--cyan);">${m.team1Score}</div>
+          <div style="font-size:2.2rem; font-weight:900; color:var(--sony-cyan);">${m.team1Score}</div>
         </div>
         <div style="font-weight:900; color:var(--text-dim); font-size:1.1rem;">VS</div>
         <div style="flex:1;">
           <div style="font-size:0.85rem; font-weight:700; color:#fff;">${t2Name}</div>
-          <div style="font-size:2rem; font-weight:900; color:var(--cyan);">${m.team2Score}</div>
+          <div style="font-size:2.2rem; font-weight:900; color:var(--sony-cyan);">${m.team2Score}</div>
         </div>
       </div>
 
@@ -733,11 +854,11 @@ function renderLoggerContent() {
 
     <!-- EVENT FORM -->
     ${(!t1 || !t2) ? `
-      <div style="padding:1.25rem; text-align:center; background:var(--bg-elevated); border-radius:var(--radius-md); font-size:0.85rem; color:var(--text-sub);">
+      <div style="padding:1.25rem; text-align:center; background:var(--bg-surface-elevated); border-radius:var(--radius-md); font-size:0.85rem; color:var(--text-sub);">
         ⏳ Teams for this match will automatically unlock once the preceding matches conclude.
       </div>
     ` : `
-      <div style="background:var(--bg-elevated); border:1px solid var(--border); border-radius:var(--radius-md); padding:1rem;">
+      <div style="background:var(--bg-surface-elevated); border:1px solid var(--glass-border); border-radius:var(--radius-md); padding:1rem;">
         <div style="font-size:0.85rem; font-weight:800; color:#fff; margin-bottom:0.75rem;">
           ⚡ Record Event
         </div>
@@ -784,7 +905,7 @@ function renderLoggerContent() {
     `}
 
     <!-- LOGGED EVENTS LIST -->
-    <div style="background:var(--bg-elevated); border:1px solid var(--border); border-radius:var(--radius-md); padding:1rem;">
+    <div style="background:var(--bg-surface-elevated); border:1px solid var(--glass-border); border-radius:var(--radius-md); padding:1rem;">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem;">
         <span style="font-size:0.85rem; font-weight:800; color:#fff;">Logged Events</span>
         <span style="font-size:0.75rem; color:var(--text-dim);">${m.events ? m.events.length : 0} total</span>
@@ -803,11 +924,11 @@ function renderLoggerContent() {
             if (ev.type === 'yellow_card') icon = '🟨';
             if (ev.type === 'red_card') icon = '🟥';
             return `
-              <div style="display:flex; align-items:center; justify-content:space-between; background:var(--bg-card); padding:0.45rem 0.65rem; border-radius:var(--radius-sm); font-size:0.8rem;">
+              <div style="display:flex; align-items:center; justify-content:space-between; background:var(--bg-surface); padding:0.45rem 0.65rem; border-radius:var(--radius-sm); font-size:0.8rem; border:1px solid var(--glass-border);">
                 <div>
                   <span>${icon}</span> <strong>${pName}</strong> (${ev.minute}')
                 </div>
-                <button class="btn btn-danger btn-sm" onclick="deleteEvent('${m.id}', ${idx})">✕</button>
+                <button class="btn btn-danger btn-sm" onclick="deleteEvent('${m.id}', ${idx})" title="Delete event">✕</button>
               </div>
             `;
           }).join('')}
@@ -834,7 +955,6 @@ function updatePlayerDropdowns() {
   const team = getTeam(teamSelect.value);
   if (!team || !team.players) return;
 
-  // Active playing squad members
   const playingSquad = team.players.filter(p => !p.isHonorary);
   const opts = playingSquad.map((p, idx) => `<option value="${p.id}">${idx + 1}. ${p.name}</option>`).join('');
   playerSelect.innerHTML = opts;
@@ -871,27 +991,27 @@ function addMatchEvent() {
 
   if (m.status === 'scheduled') m.status = 'live';
 
-  recalculateAll();
+  recalculateAll(true);
   renderAll();
   renderLoggerContent();
-  showToast("Event logged & standings updated!");
+  showToast("Goal/Event logged & synced across all devices!");
 }
 
 function deleteEvent(matchId, idx) {
   const m = tournamentData.matches.find(item => item.id === matchId);
   if (!m || !m.events) return;
   m.events.splice(idx, 1);
-  recalculateAll();
+  recalculateAll(true);
   renderAll();
   renderLoggerContent();
-  showToast("Event deleted.");
+  showToast("Event removed & scores recalculated.");
 }
 
 function setMatchStatus(matchId, status) {
   const m = tournamentData.matches.find(item => item.id === matchId);
   if (!m) return;
   m.status = status;
-  recalculateAll();
+  recalculateAll(true);
   renderAll();
   renderLoggerContent();
   showToast(`Match status: ${status.toUpperCase()}`);
@@ -926,9 +1046,9 @@ function initSettings() {
           const parsed = JSON.parse(ev.target.result);
           if (parsed.teams && parsed.matches) {
             tournamentData = parsed;
-            recalculateAll();
+            recalculateAll(true);
             renderAll();
-            showToast("Backup imported successfully!");
+            showToast("Backup imported & pushed to cloud!");
           }
         } catch (err) {
           alert("Invalid backup file: " + err.message);
@@ -941,12 +1061,12 @@ function initSettings() {
   const resetBtn = document.getElementById('btn-reset-tournament');
   if (resetBtn) {
     resetBtn.addEventListener('click', () => {
-      if (confirm("Reset tournament back to initial blank fixtures and clear all stats?")) {
+      if (confirm("Reset tournament back to initial blank fixtures and clear all stats across all devices?")) {
         localStorage.removeItem(STORAGE_KEY);
-        initData();
-        recalculateAll();
+        tournamentData = JSON.parse(JSON.stringify(INITIAL_TOURNAMENT_DATA));
+        recalculateAll(true);
         renderAll();
-        showToast("Tournament reset.");
+        showToast("Tournament reset across all devices.");
       }
     });
   }
