@@ -1142,3 +1142,64 @@ body {
   50% { transform: scale(1.2); opacity: 1; }
   100% { transform: scale(0.95); opacity: 0.8; }
 }
+
+/* LIVESTREAM BROADCAST BANNER */
+.livestream-card {
+  position: relative;
+  background: linear-gradient(135deg, rgba(244, 63, 94, 0.12) 0%, rgba(14, 20, 32, 0.75) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(244, 63, 94, 0.35);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  box-shadow: 0 10px 30px rgba(244, 63, 94, 0.15);
+  overflow: hidden;
+  transition: all 0.25s var(--ease-liquid);
+  flex-wrap: wrap;
+}
+
+.livestream-card.no-stream {
+  background: var(--bg-surface);
+  border-color: var(--glass-border);
+  box-shadow: var(--shadow-ambient);
+}
+
+.livestream-live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.72rem;
+  font-weight: 900;
+  color: #fff;
+  background: #f43f5e;
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--radius-pill);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  box-shadow: 0 0 14px rgba(244, 63, 94, 0.6);
+  animation: pulseLiveBadge 1.8s infinite;
+}
+
+@keyframes pulseLiveBadge {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.04); }
+  100% { transform: scale(1); }
+}
+
+.livestream-btn {
+  background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%);
+  color: #fff !important;
+  font-weight: 800;
+  box-shadow: 0 4px 16px rgba(244, 63, 94, 0.4);
+}
+
+.livestream-btn:hover {
+  background: #fb7185;
+  box-shadow: 0 6px 22px rgba(244, 63, 94, 0.6);
+  transform: translateY(-2px);
+}

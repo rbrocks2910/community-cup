@@ -10,6 +10,7 @@ const INITIAL_TOURNAMENT_DATA = {
     venue: "Athletes Sports Arena, Nirala Nagar, Lucknow",
     logo: "images/tournament_logo.jpg"
   },
+  liveStreamUrl: "",
   teams: [
     {
       id: "inter_babuganj",

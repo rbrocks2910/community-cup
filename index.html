@@ -32,6 +32,9 @@
       </nav>
 
       <div style="display:flex; align-items:center; gap:0.6rem;">
+        <a id="header-watch-live-btn" href="#" target="_blank" class="btn btn-sm livestream-btn" style="display:none; text-decoration:none;">
+          🔴 Watch Live
+        </a>
         <div class="cloud-status-badge" id="cloud-status" onclick="fetchCloudData(true)" title="Click to refresh live cloud data">
           <span class="cloud-dot" id="cloud-dot"></span>
           <span id="cloud-status-text">Cloud Live</span>
@@ -107,6 +110,11 @@
             <!-- Injected via JS -->
           </div>
         </div>
+      </div>
+
+      <!-- LIVESTREAM BROADCAST BANNER -->
+      <div id="livestream-banner-container">
+        <!-- Injected via JS -->
       </div>
 
       <!-- SPOTLIGHT: UPCOMING MATCH -->
@@ -252,7 +260,18 @@
         <p class="view-desc">Export JSON backups or reset data</p>
       </div>
 
-      <div style="display:flex; flex-direction:column; gap:1rem; max-width:480px;">
+      <div style="display:flex; flex-direction:column; gap:1.25rem; max-width:480px;">
+        <div style="background:var(--bg-surface); border:1px solid var(--glass-border); border-radius:var(--radius-md); padding:1.25rem;">
+          <label class="form-label">🔴 Official Live Stream Link</label>
+          <div style="display:flex; gap:0.5rem; margin-top:0.35rem;">
+            <input type="url" id="setting-livestream-input" class="form-control" placeholder="https://youtube.com/live/... or any link" />
+            <button class="btn btn-gold btn-sm" onclick="saveLivestreamFromInput()">Save</button>
+          </div>
+          <span style="font-size:0.75rem; color:var(--text-dim); display:block; margin-top:0.4rem;">
+            Syncs across all phones and laptops automatically in real-time.
+          </span>
+        </div>
+
         <button class="btn btn-cyan" id="btn-export-backup">
           ⬇️ Export Tournament JSON Backup
         </button>

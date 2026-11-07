@@ -385,11 +385,116 @@ function recalculateKnockouts() {
 // -------------------------------------------------------------
 function renderAll() {
   renderOverview();
+  renderLivestream();
   renderMatches();
   renderStandings();
   renderBracket();
   renderSquads();
   renderLeaderboards();
+}
+
+// 0. LIVE STREAM BROADCAST DESK
+function renderLivestream() {
+  const container = document.getElementById('livestream-banner-container');
+  const headerBtn = document.getElementById('header-watch-live-btn');
+  const settingInput = document.getElementById('setting-livestream-input');
+
+  const streamUrl = tournamentData ? (tournamentData.liveStreamUrl || '').trim() : '';
+
+  // Header quick access button
+  if (headerBtn) {
+    if (streamUrl) {
+      headerBtn.href = streamUrl;
+      headerBtn.style.display = 'inline-flex';
+    } else {
+      headerBtn.style.display = 'none';
+    }
+  }
+
+  // Settings tab input
+  if (settingInput && document.activeElement !== settingInput) {
+    settingInput.value = streamUrl;
+  }
+
+  // Main banner on Overview tab
+  if (container) {
+    if (streamUrl) {
+      container.innerHTML = `
+        <div class="livestream-card">
+          <div style="display:flex; align-items:center; gap:0.85rem; flex-wrap:wrap;">
+            <span class="livestream-live-badge">🔴 LIVE BROADCAST</span>
+            <div>
+              <div style="font-weight:900; font-size:1.05rem; color:#fff;">Watch Community Cup Live</div>
+              <div style="font-size:0.78rem; color:var(--text-sub); word-break:break-all;">
+                Official Stream: ${streamUrl}
+              </div>
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap;">
+            <a href="${streamUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-sm livestream-btn" style="text-decoration:none;">
+              ▶ Open Live Stream
+            </a>
+            <button class="btn btn-dark btn-sm" onclick="promptLivestreamUrl()">
+              ✏️ Edit
+            </button>
+            <button class="btn btn-dark btn-sm" onclick="clearLivestreamUrl()" title="Remove stream link">
+              ✕
+            </button>
+          </div>
+        </div>
+      `;
+    } else {
+      container.innerHTML = `
+        <div class="livestream-card no-stream">
+          <div style="display:flex; align-items:center; gap:0.75rem;">
+            <span style="font-size:1.6rem;">🎥</span>
+            <div>
+              <div style="font-weight:800; font-size:0.95rem; color:#fff;">Live Broadcast Desk</div>
+              <div style="font-size:0.76rem; color:var(--text-dim);">
+                Streamer: Paavan • Parth • Ishaan. Paste the stream URL once live.
+              </div>
+            </div>
+          </div>
+          <button class="btn btn-cyan btn-sm" onclick="promptLivestreamUrl()">
+            ➕ Set Live Stream Link
+          </button>
+        </div>
+      `;
+    }
+  }
+}
+
+function promptLivestreamUrl() {
+  const current = tournamentData ? (tournamentData.liveStreamUrl || '') : '';
+  const url = prompt("Paste or enter the Live Stream Link (YouTube Live, Instagram, Twitch, etc.):", current);
+  if (url !== null) {
+    setLivestreamUrl(url.trim());
+  }
+}
+
+function saveLivestreamFromInput() {
+  const input = document.getElementById('setting-livestream-input');
+  if (input) {
+    setLivestreamUrl(input.value.trim());
+  }
+}
+
+function clearLivestreamUrl() {
+  if (confirm("Remove the live stream link for all viewers across all devices?")) {
+    setLivestreamUrl('');
+  }
+}
+
+function setLivestreamUrl(url) {
+  if (!tournamentData) return;
+  tournamentData.liveStreamUrl = url;
+  recalculateAll(true);
+  renderLivestream();
+  if (url) {
+    showToast("Live stream link published across all devices!");
+  } else {
+    showToast("Live stream link removed.");
+  }
 }
 
 // 1. OVERVIEW
