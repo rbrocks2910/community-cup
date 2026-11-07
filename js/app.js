@@ -285,6 +285,26 @@ function computeGroupTable(groupName) {
   return rows;
 }
 
+function getStreamer(m) {
+  if (!m) return "Paavan";
+  const t1 = m.team1Id;
+  const t2 = m.team2Id;
+
+  // Paavan is on Babuganj United
+  const paavanPlaying = (t1 === 'babuganj_united' || t2 === 'babuganj_united');
+  // Parth is on Soviet Union FC
+  const parthPlaying = (t1 === 'soviet_union' || t2 === 'soviet_union');
+
+  if (!paavanPlaying) {
+    return "Paavan";
+  }
+  if (!parthPlaying) {
+    return "Parth";
+  }
+  // Both Paavan and Parth are playing
+  return "Ishaan";
+}
+
 function recalculateKnockouts() {
   if (!tournamentData || !tournamentData.matches) return;
   const matchMap = {};
@@ -353,6 +373,11 @@ function recalculateKnockouts() {
     m12.team1Id = getWinnerAndLoser(m9).winnerId;
     m12.team2Id = getWinnerAndLoser(m10).winnerId;
   }
+
+  // Update dynamic streamers for all matches
+  tournamentData.matches.forEach(m => {
+    m.streamer = getStreamer(m);
+  });
 }
 
 // -------------------------------------------------------------
@@ -415,8 +440,9 @@ function renderOverview() {
         </div>
       </div>
       <div class="match-officials-bar">
-        <span>🚩 Referee: <strong>${nextM.referee || 'TBD'}</strong></span>
-        <span>📝 Stats Desk: <strong>${nextM.statsKeeper || 'Moon'}</strong></span>
+        <span>🚩 Ref: <strong>${nextM.referee || 'TBD'}</strong></span>
+        <span>📝 Stats: <strong>${nextM.statsKeeper || 'Moon'}</strong></span>
+        <span>🎥 Stream: <strong style="color:var(--gold);">${getStreamer(nextM)}</strong></span>
       </div>
       <div class="match-card-bottom">
         <span style="font-size:0.75rem; color:var(--text-dim);">${nextM.events ? nextM.events.length : 0} events logged</span>
@@ -496,8 +522,9 @@ function renderMatches() {
         </div>
 
         <div class="match-officials-bar">
-          <span>🚩 Referee: <strong>${m.referee || 'TBD'}</strong></span>
+          <span>🚩 Ref: <strong>${m.referee || 'TBD'}</strong></span>
           <span>📝 Stats: <strong>${m.statsKeeper || 'Moon'}</strong></span>
+          <span>🎥 Stream: <strong style="color:var(--gold);">${getStreamer(m)}</strong></span>
         </div>
 
         ${eventsHtml}
@@ -849,6 +876,7 @@ function renderLoggerContent() {
       <div class="match-officials-bar" style="margin-top:0.85rem; justify-content:center; gap:1.25rem;">
         <span>🚩 Referee: <strong>${m.referee || 'TBD'}</strong></span>
         <span>📝 Stats Desk: <strong style="color:var(--sony-cyan);">${m.statsKeeper || 'Moon'}</strong></span>
+        <span>🎥 Streamer: <strong style="color:var(--gold);">${getStreamer(m)}</strong></span>
       </div>
     </div>
 

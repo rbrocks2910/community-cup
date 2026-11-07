@@ -121,6 +121,7 @@ const INITIAL_TOURNAMENT_DATA = {
       team2Score: 0,
       referee: "Saurabh",
       statsKeeper: "Shardul / Saurabh",
+      streamer: "Paavan",
       events: []
     },
     {
@@ -140,6 +141,7 @@ const INITIAL_TOURNAMENT_DATA = {
       team2Score: 0,
       referee: "Shubbu",
       statsKeeper: "Moon",
+      streamer: "Parth",
       events: []
     },
     {
@@ -159,6 +161,7 @@ const INITIAL_TOURNAMENT_DATA = {
       team2Score: 0,
       referee: "Rishit",
       statsKeeper: "Moon",
+      streamer: "Paavan",
       events: []
     },
     {
@@ -178,6 +181,7 @@ const INITIAL_TOURNAMENT_DATA = {
       team2Score: 0,
       referee: "Arjun",
       statsKeeper: "Moon",
+      streamer: "Parth",
       events: []
     },
     {
@@ -197,6 +201,7 @@ const INITIAL_TOURNAMENT_DATA = {
       team2Score: 0,
       referee: "Ayush",
       statsKeeper: "Shardul / Saurabh",
+      streamer: "Paavan",
       events: []
     },
     {
@@ -216,6 +221,7 @@ const INITIAL_TOURNAMENT_DATA = {
       team2Score: 0,
       referee: "Aarav",
       statsKeeper: "Moon",
+      streamer: "Paavan",
       events: []
     },
     {
@@ -237,6 +243,7 @@ const INITIAL_TOURNAMENT_DATA = {
       team2Score: 0,
       referee: "TBD",
       statsKeeper: "Moon",
+      streamer: "Paavan",
       events: []
     },
     {
@@ -258,6 +265,7 @@ const INITIAL_TOURNAMENT_DATA = {
       team2Score: 0,
       referee: "TBD",
       statsKeeper: "Moon",
+      streamer: "Paavan",
       events: []
     },
     {
@@ -279,6 +287,7 @@ const INITIAL_TOURNAMENT_DATA = {
       team2Score: 0,
       referee: "TBD",
       statsKeeper: "Moon",
+      streamer: "Paavan",
       events: []
     },
     {
@@ -300,6 +309,7 @@ const INITIAL_TOURNAMENT_DATA = {
       team2Score: 0,
       referee: "TBD",
       statsKeeper: "Moon",
+      streamer: "Paavan",
       events: []
     },
     {
@@ -321,6 +331,7 @@ const INITIAL_TOURNAMENT_DATA = {
       team2Score: 0,
       referee: "TBD",
       statsKeeper: "Moon",
+      streamer: "Paavan",
       events: []
     },
     {
@@ -342,6 +353,7 @@ const INITIAL_TOURNAMENT_DATA = {
       team2Score: 0,
       referee: "TBD",
       statsKeeper: "Moon",
+      streamer: "Paavan",
       events: []
     }
   ]

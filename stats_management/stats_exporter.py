@@ -41,8 +41,9 @@ def print_summary(data):
         
         ref = m.get('referee', '')
         desk = m.get('statsKeeper', '')
-        if ref or desk:
-            print(f"      * Ref: {ref:10s} | Stats Desk: {desk}")
+        streamer = m.get('streamer', 'Paavan')
+        if ref or desk or streamer:
+            print(f"      * Ref: {ref:10s} | Stats: {desk:18s} | Streamer: {streamer}")
 
         events = m.get('events', [])
         for ev in events:

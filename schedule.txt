@@ -68,29 +68,40 @@ TOURNAMENT SCHEDULE
 ================================================================================
 GROUP STAGE (10 Mins Matches)
   05:00 PM | Match 1 [Group A] - Inter Babuganj vs Empire State FC (10m)
-             • Referee: Saurabh  |  Stats Desk: Shardul / Saurabh
+             • Referee: Saurabh  |  Stats: Shardul / Saurabh  |  Streamer: Paavan
   05:13 PM | Match 2 [Group B] - FC Nai Basti vs Babuganj United (10m)
-             • Referee: Shubbu   |  Stats Desk: Moon
+             • Referee: Shubbu   |  Stats: Moon               |  Streamer: Parth
   05:26 PM | Match 3 [Group A] - Empire State FC vs Soviet Union FC (10m)
-             • Referee: Rishit   |  Stats Desk: Moon
+             • Referee: Rishit   |  Stats: Moon               |  Streamer: Paavan
   05:39 PM | Match 4 [Group B] - Babuganj United vs SFC FC (10m)
-             • Referee: Arjun    |  Stats Desk: Moon
+             • Referee: Arjun    |  Stats: Moon               |  Streamer: Parth
   05:52 PM | Match 5 [Group A] - Soviet Union FC vs Inter Babuganj (10m)
-             • Referee: Ayush    |  Stats Desk: Shardul / Saurabh
+             • Referee: Ayush    |  Stats: Shardul / Saurabh  |  Streamer: Paavan
   06:05 PM | Match 6 [Group B] - SFC FC vs FC Nai Basti (10m)
-             • Referee: Aarav    |  Stats Desk: Moon
+             • Referee: Aarav    |  Stats: Moon               |  Streamer: Paavan
 
 PLAYOFF QUALIFIERS (12 Mins Matches)
   06:21 PM | Match 7 [Qualifier 1] - 2nd Group A vs 3rd Group B (12m)
+             • Streamer: Paavan (or Parth if Paavan playing; Ishaan if both playing)
   06:36 PM | Match 8 [Qualifier 2] - 2nd Group B vs 3rd Group A (12m)
+             • Streamer: Paavan (or Parth if Paavan playing; Ishaan if both playing)
 
 SEMI-FINALS (15 Mins Matches)
   06:52 PM | Match 9  [Semi-Final 1] - 1st Group A vs Winner Qualifier 2 (15m)
+             • Streamer: Paavan (or Parth if Paavan playing; Ishaan if both playing)
   07:10 PM | Match 10 [Semi-Final 2] - 1st Group B vs Winner Qualifier 1 (15m)
+             • Streamer: Paavan (or Parth if Paavan playing; Ishaan if both playing)
 
 FINALS
   07:29 PM | Match 11 [3rd Place Match] - Loser Semi 1 vs Loser Semi 2 (10m)
+             • Streamer: Paavan (or Parth if Paavan playing; Ishaan if both playing)
   07:43 PM | Match 12 [Grand Final] - Winner Semi 1 vs Winner Semi 2 (15m)
+             • Streamer: Paavan (or Parth if Paavan playing; Ishaan if both playing)
+
+STREAMING PROTOCOL:
+  • Primary Streamer: Paavan (streams all matches when not playing)
+  • Backup Streamer:  Parth (streams whenever Babuganj United / Paavan is playing)
+  • Decider Streamer: Ishaan (streams if both Paavan and Parth are playing together)
 
 07:58 PM: Championship Presentation & Trophy Ceremony
 ================================================================================

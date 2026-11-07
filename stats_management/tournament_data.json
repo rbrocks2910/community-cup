@@ -331,7 +331,8 @@
       "events": [],
       "notes": "05:00 - 05:10 PM \u2022 3m quick change",
       "referee": "Saurabh",
-      "statsKeeper": "Shardul / Saurabh"
+      "statsKeeper": "Shardul / Saurabh",
+      "streamer": "Paavan"
     },
     {
       "id": "M2",
@@ -352,7 +353,8 @@
       "events": [],
       "notes": "05:13 - 05:23 PM \u2022 Group A resting",
       "referee": "Shubbu",
-      "statsKeeper": "Moon"
+      "statsKeeper": "Moon",
+      "streamer": "Parth"
     },
     {
       "id": "M3",
@@ -373,7 +375,8 @@
       "events": [],
       "notes": "05:26 - 05:36 PM \u2022 Empire State rested",
       "referee": "Rishit",
-      "statsKeeper": "Moon"
+      "statsKeeper": "Moon",
+      "streamer": "Paavan"
     },
     {
       "id": "M4",
@@ -394,7 +397,8 @@
       "events": [],
       "notes": "05:39 - 05:49 PM \u2022 Babuganj rested",
       "referee": "Arjun",
-      "statsKeeper": "Moon"
+      "statsKeeper": "Moon",
+      "streamer": "Parth"
     },
     {
       "id": "M5",
@@ -415,7 +419,8 @@
       "events": [],
       "notes": "05:52 - 06:02 PM \u2022 Group A Decider",
       "referee": "Ayush",
-      "statsKeeper": "Shardul / Saurabh"
+      "statsKeeper": "Shardul / Saurabh",
+      "streamer": "Paavan"
     },
     {
       "id": "M6",
@@ -436,7 +441,8 @@
       "events": [],
       "notes": "06:05 - 06:15 PM \u2022 Group B Decider",
       "referee": "Aarav",
-      "statsKeeper": "Moon"
+      "statsKeeper": "Moon",
+      "streamer": "Paavan"
     },
     {
       "id": "M7",
@@ -469,7 +475,8 @@
       "events": [],
       "notes": "06:21 - 06:33 PM \u2022 Winner to SF 2",
       "referee": "TBD",
-      "statsKeeper": "Moon"
+      "statsKeeper": "Moon",
+      "streamer": "Paavan"
     },
     {
       "id": "M8",
@@ -502,7 +509,8 @@
       "events": [],
       "notes": "06:36 - 06:48 PM \u2022 Winner to SF 1",
       "referee": "TBD",
-      "statsKeeper": "Moon"
+      "statsKeeper": "Moon",
+      "streamer": "Paavan"
     },
     {
       "id": "M9",
@@ -534,7 +542,8 @@
       "events": [],
       "notes": "06:52 - 07:07 PM \u2022 Winner to Final",
       "referee": "TBD",
-      "statsKeeper": "Moon"
+      "statsKeeper": "Moon",
+      "streamer": "Paavan"
     },
     {
       "id": "M10",
@@ -566,7 +575,8 @@
       "events": [],
       "notes": "07:10 - 07:25 PM \u2022 Winner to Final",
       "referee": "TBD",
-      "statsKeeper": "Moon"
+      "statsKeeper": "Moon",
+      "streamer": "Paavan"
     },
     {
       "id": "M11",
@@ -597,7 +607,8 @@
       "events": [],
       "notes": "07:29 - 07:39 PM \u2022 Bronze decider",
       "referee": "TBD",
-      "statsKeeper": "Moon"
+      "statsKeeper": "Moon",
+      "streamer": "Paavan"
     },
     {
       "id": "M12",
@@ -628,7 +639,8 @@
       "events": [],
       "notes": "07:43 - 07:58 PM \u2022 Championship Cup Final",
       "referee": "TBD",
-      "statsKeeper": "Moon"
+      "statsKeeper": "Moon",
+      "streamer": "Paavan"
     }
   ]
 }
